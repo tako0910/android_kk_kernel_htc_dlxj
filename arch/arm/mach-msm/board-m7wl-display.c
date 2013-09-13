@@ -103,8 +103,22 @@ static int m7wl_detect_panel(const char *name)
 	return -ENODEV;
 }
 
+#ifdef CONFIG_UPDATE_LCDC_LUT
+int update_preset_lcdc_lut(void)
+{
+	return 0;
+}
+#endif
+
 static struct msm_fb_platform_data msm_fb_pdata = {
+<<<<<<< HEAD:arch/arm/mach-msm/board-m7wl-display.c
 	.detect_client = m7wl_detect_panel,
+=======
+	.detect_client = m7_detect_panel,
+#ifdef CONFIG_UPDATE_LCDC_LUT
+	.update_lcdc_lut = update_preset_lcdc_lut,
+#endif
+>>>>>>> f445dfb... drivers/video/msm: restore update_lcdc_lut capabilities for MDP devices:arch/arm/mach-msm/board-m7-display.c
 };
 
 static struct platform_device msm_fb_device = {
