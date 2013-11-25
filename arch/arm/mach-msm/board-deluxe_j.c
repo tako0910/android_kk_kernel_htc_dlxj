@@ -1014,6 +1014,21 @@ static void __init deluxe_j_early_reserve(void)
 }
 
 #ifdef CONFIG_HTC_BATT_8960
+static int pm8921_is_wireless_charger(void)
+{
+	int usb_in, dc_in;
+
+	usb_in = pm8921_is_usb_chg_plugged_in();
+	dc_in = pm8921_is_dc_chg_plugged_in();
+	pr_info("%s: usb_in=%d, dc_in=%d\n", __func__, usb_in, dc_in);
+	if (!usb_in && dc_in)
+		return 1;
+	else
+		return 0;
+}
+
+static int critical_alarm_voltage_mv[] = {3000, 3100, 3200, 3400};
+
 static struct htc_battery_platform_data htc_battery_pdev_data = {
 	.guage_driver = 0,
 	.chg_limit_active_mask = HTC_BATT_CHG_LIMIT_BIT_TALK |
