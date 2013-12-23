@@ -3238,6 +3238,8 @@ CONFIG_ASYNC_FSYNC=y
 #       CONFIG_EXFAT_FS should be modified with project code name to prevent conflict with other projects
 #
 CONFIG_EXFAT_FS=m
+CONFIG_EXFAT_DEFAULT_CODEPAGE=437
+CONFIG_EXFAT_DEFAULT_IOCHARSET="utf8"
 CONFIG_EXFAT_PATH="texfat_m7wlv"
 CONFIG_EXFAT_VERSION="target/htc.d/htc-3013.6.27"
 
