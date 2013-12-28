@@ -1009,19 +1009,6 @@ static void __init deluxe_j_early_reserve(void)
 }
 
 #ifdef CONFIG_HTC_BATT_8960
-static int pm8921_is_wireless_charger(void)
-{
-	int usb_in, dc_in;
-
-	usb_in = pm8921_is_usb_chg_plugged_in();
-	dc_in = pm8921_is_dc_chg_plugged_in();
-	pr_info("%s: usb_in=%d, dc_in=%d\n", __func__, usb_in, dc_in);
-	if (!usb_in && dc_in)
-		return 1;
-	else
-		return 0;
-}
-
 static int critical_alarm_voltage_mv[] = {3000, 3100, 3200, 3400};
 
 static struct htc_battery_platform_data htc_battery_pdev_data = {
@@ -1057,7 +1044,7 @@ static struct htc_battery_platform_data htc_battery_pdev_data = {
 	.icharger.is_ovp = pm8921_is_charger_ovp,
 	.icharger.is_batt_temp_fault_disable_chg =
 						pm8921_is_batt_temp_fault_disable_chg,
-	.icharger.is_vbus_unstable = pm8921_is_vbus_unstable,
+//	.icharger.is_vbus_unstable = pm8921_is_vbus_unstable,
 	.icharger.charger_change_notifier_register =
 						cable_detect_register_notifier,
 	.icharger.dump_all = pm8921_dump_all,
@@ -4971,12 +4958,12 @@ static void __init deluxe_j_common_init(void)
 	if (system_rev == XA)
 		clk_ignor_list_add("msm_sdcc.3", "core_clk", &apq8064_clock_init_data);
 	else if (system_rev >= XB)
-		clk_ignor_list_add("msm_sdcc.4", "core_clk", &deluxe_j_clock_init_data_xb);
+		clk_ignor_list_add("msm_sdcc.4", "core_clk", &apq8064_clock_init_data_xb);
 	
 	if ( system_rev == XA )
 		msm_clock_init(&apq8064_clock_init_data);
 	else if ( system_rev >= XB )
-		msm_clock_init(&deluxe_j_clock_init_data_xb);
+		msm_clock_init(&apq8064_clock_init_data_xb);
 	deluxe_j_init_gpiomux();
 #ifdef CONFIG_RESET_BY_CABLE_IN
 	pr_info("[CABLE] Enable Ac Reset Function.(%d) \n", system_rev);
